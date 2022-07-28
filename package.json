@@ -2,10 +2,7 @@
   "name": "highlightjs-turtle",
   "version": "1.0.0",
   "description": "highlight.js syntax definition for semantic web languages: SPARQL, Turtle, GraphDB PIE, SHACLC",
-  "main": "turtle.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/highlightjs/highlightjs-turtle.git"
@@ -25,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/highlightjs/highlightjs-turtle/issues"
   },
-  "homepage": "https://github.com/highlightjs/highlightjs-turtle"
+  "homepage": "https://github.com/highlightjs/highlightjs-turtle",
+  "devDependencies": {
+    "highlight.js": "^11.6.0"
+  }
 }

@@ -1,0 +1,196 @@
+<html>
+
+<body>
+    <h1>Highlighting examples</h1>
+    
+    <div><span>Select highlight.js theme: </span>
+    <select id="styleSelector">
+        <option value="default">default</option>
+        <option value="mono-blue">mono-blue</option>
+        <option value="monokai-sublime">monokai-sublime</option>
+        <option value="nord">nord</option>
+        <option value="rainbow">rainbow</option>
+        <option value="vs2015">vs2015</option>
+    </select>
+    </div>
+
+    <h2>PIE</h2>
+    <pre>
+    <code class="language-pie">
+Prefices
+{ /* useful */
+    rdf  :  http://www.w3.org/1999/02/22-rdf-syntax-ns#
+}
+
+Axioms
+{ // builtin facts
+    &lt;rdf:first&gt;     &lt;rdf:type&gt; &lt;rdf:Property&gt;
+}
+
+Rules {
+  Id: owl_FunctProp
+    p  &lt;rdf:type&gt;  &lt;owl:FunctionalProperty&gt;
+    x  p  y       [Constraint y != z, p != &lt;rdf:type&gt;]
+    x  p  z       [Constraint z != y] [Cut]
+    -------------------------------
+    y  &lt;owl:sameAs&gt;  z
+
+  Id: ruleWithLiterals
+    x &lt;ex:priority&gt; &quot;100&quot;^^xsd:decimal
+    ----------------------------------
+    x &lt;ex:important&gt; &quot;true&quot;^^xsd:boolean
+    
+  Consistency: sameAs_with_differentFrom_is_forbidden
+    x owl:sameAs y
+    x owl:differentFrom y
+    ---------------------
+
+  Consistency: checkDomain
+    x  p  y
+    p  &lt;rdfs:domain&gt;  c
+    -----------------
+    x  &lt;rdf:type&gt;  c
+}
+    </code>
+    </pre>
+
+    <h2>Sparql</h2>
+    <pre>
+    <code class="language-sparql">
+# SPARQL comment
+PREFIX data: &lt;http://example.com/foaf/&gt;
+PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+
+SELECT ?mbox ?nick ?ppd
+FROM NAMED &lt;http://example.org/foaf/aliceFoaf&gt;
+FROM NAMED &lt;http://example.org/foaf/bobFoaf&gt;
+WHERE {
+  GRAPH data:aliceFoaf {
+    ?alice  foaf:mbox &lt;mailto:alice@work.example&gt;;
+            foaf:knows ?whom .
+    ?whom   foaf:mbox ?mbox ;
+            rdfs:seeAlso ?ppd .
+    ?ppd    a foaf:PersonaProfileDocument .
+  }
+  GRAPH ?ppd {
+    ?w  foaf:mbox ?mbox ;
+        foaf:nick ?nick
+  }
+}
+
+SELECT ?test
+FROM NAMED &lt;http://something.com/rdf/thing&gt;;
+
+SELECT ?P (COUNT(?O) AS ?C)
+WHERE { ?S ?P ?O }
+GROUP BY ?P
+HAVING (COUNT(?O) &gt; 2 )
+
+prefix es:   &lt;http://www.ontotext.com/connectors/elasticsearch#&gt;
+prefix inst: &lt;http://www.ontotext.com/connectors/elasticsearch/instance#&gt;
+insert data {
+  inst:entity-person es:createConnector &quot;&quot;&quot; {
+    &quot;elasticsearchNode&quot;: &quot;localhost:9300&quot;,
+    &quot;types&quot;: [&quot;http://www.ontotext.com/example#Document&quot;],
+    &quot;fields&quot;: [{
+      &quot;fieldName&quot;: &quot;person&quot;,
+      &quot;propertyChain&quot;: [&quot;http://factforge.net/ff2016-mapping/mentionsEntity&quot;, &quot;http://www.w3.org/2000/01/rdf-schema#label&quot;]
+    }],
+    &quot;entityFilter&quot;: &quot;bound(parent(?person) -&gt; type) &amp;&amp; parent(?person) -&gt; type in (&lt;http://dbpedia.org/ontology/Person&gt;)&quot;
+  } &quot;&quot;&quot;
+}
+
+prefix inst: &lt;http://www.ontotext.com/connectors/elasticsearch/instance#&gt;
+select ?name ?key ?count {
+  ?search a inst:date-connector;
+    :query &#39;&#39;&#39; {&quot;aggs&quot;: {&quot;weekly bucket&quot;: {&quot;date_histogram&quot; : {
+        &quot;field&quot; : &quot;date&quot;,
+        &quot;interval&quot; : &quot;week&quot;,
+        &quot;format&quot; : &quot;yyyy-MM-dd&quot;
+    }}}} &#39;&#39;&#39;
+}
+    </code>
+    </pre>
+
+    <h2>Turtle</h2>
+    <pre>
+    <code class="language-turtle">
+@base &lt;http://example.org/&gt; .
+@prefix : &lt;http://example.org/&gt;.
+@prefix rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt; .
+@prefix rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt; .
+@prefix foaf: &lt;http://xmlns.com/foaf/0.1/&gt; .
+@prefix rel: &lt;http://www.perceive.net/schemas/relationship/&gt; .
+@prefix ff-map:  &lt;http://factforge.net/ff2016-mapping/&gt;.
+
+&lt;#green-goblin&gt;
+    rel:enemyOf &lt;#spiderman&gt; ;
+    a foaf:Person ; # in the context of the Marvel universe
+    foaf:description &quot;&quot;&quot;Long TRIPLE_QUOTE_STRING with &#39;&#39;&#39; embedded
+    apostrophes &#39;&#39;&#39;&quot;&quot;&quot;,
+    &#39;&#39;&#39;The librarian said, &quot;Perhaps you would enjoy &#39;War and Peace&#39;.&quot;&#39;&#39;&#39;.
+
+&lt;#spiderman&gt; rel:enemyOf &lt;#green-goblin&gt; ;
+    foaf:name &quot;Spiderman&quot;@en, &quot;Человек-паук&quot;@ru ;
+    foaf:age &quot;23&quot;^^xsd:integer, 23;
+    foaf:height 1.68, 0.168e1, &quot;1.68&quot;^^xsd:decimal, true, false;
+    foaf:mbox  &lt;mailto:alice@example.org&gt;;
+    rdfs:label &#39;chat&#39;@fr, 
+
+_:blank1 fb:object.type fb:object.type.car. # trailing dot not part of symbol
+: rel:weird :bar, rel: ; rel:weird rel:.
+
+&lt;/doc#char=10,20&gt; ff-map:mentionsEntity &lt;/entity&gt;.
+    </code>
+    </pre>
+
+    <!-- Styles --->
+    <link 
+        rel="stylesheet"
+        id="style" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/default.min.css"
+    >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/firacode/6.2.0/fira_code.min.css">
+    <style>
+        body {
+            max-width: 1280px;
+            margin-right: auto;
+            margin-left: auto;
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-top: 15px;
+        }
+
+        code, h1, h2, span {
+            font-family: 'Fira Code', monospace;
+        }
+    </style>
+
+    <!-- Style switcher --->
+    <script>
+        function setStyleSource (linkID, sourceLocation) {
+            var link = document.getElementById(linkID);
+            link.href = sourceLocation;
+            console.log(link.href);
+        }
+
+        document
+            .getElementById("styleSelector")
+            .addEventListener("change", 
+                function(){
+                    var selected = this.options[this.selectedIndex].value;
+                    var href = `https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/${selected}.min.css`;
+                    setStyleSource ("style", href);
+        });
+    </script>
+
+    <!-- Highlight.js --->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+    <script src="./dist/pie.min.js"></script>
+    <script src="./dist/turtle.min.js"></script>
+    <script src="./dist/sparql.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+
+</html>
