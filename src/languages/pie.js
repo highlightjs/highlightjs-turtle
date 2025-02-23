@@ -6,10 +6,10 @@ Description: GraphDB Rules language for semantic reasoning
 Website: http://graphdb.ontotext.com/documentation/standard/reasoning.html
 */
 
-function(hljs) {
+module.exports = function(hljs) {
   var KEYWORDS = {
     begin: /^(Prefices|Axioms|Rules)/, end: /\s*\{/,
-    keywords: 'Prefices|20 Axioms|10 Rules|10'
+    keywords: 'Prefices|5 Axioms|5 Rules|5'
   };
   
   var PREFIX = {
@@ -25,13 +25,13 @@ function(hljs) {
 
   var RULE = {
     begin: /\b(Id|Consistency)\s*:/, end: '\n',
-    keywords: 'Id|1 Consistency|10',
+    keywords: 'Id|1 Consistency|5',
     contains: [{begin: hljs.IDENT_RE, className: 'title'}]
   };
 
   var ANNOTATION = {
     begin: /\[(Constraint|Context|Cut)/,
-    keywords: {function: 'Constraint|10 Context|0 Cut|10'},
+    keywords: {function: 'Constraint|5 Context|0 Cut|5'},
   };
   
   var SYMBOL = {

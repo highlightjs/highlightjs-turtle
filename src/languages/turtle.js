@@ -6,7 +6,7 @@ Description: Terse RDF Triple Language for the semantic web
 Website: https://www.w3.org/TR/turtle/
 */
 
-function(hljs) {
+module.exports = function(hljs) {
   var KEYWORDS = {
     keyword: 'base|10 prefix|10 @base|10 @prefix|10',
     literal: 'true|0 false|0',
@@ -48,7 +48,7 @@ function(hljs) {
   };
 
   var LANGTAG = {
-    begin: /@[a-zA-Z]+([a-zA-Z0-9-]+)*/,
+    begin: /@[a-zA-Z]+(-[a-zA-Z0-9]+)*/,
     className: 'type',
     relevance: 5, // also catches objectivec keywords like: @protocol, @optional
   };
