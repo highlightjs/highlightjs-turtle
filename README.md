@@ -1,10 +1,10 @@
-# highlightjs-turtle
+# highlightjs-rdflang
 Semantic Web languages
 
 [highlight.js](https://github.com/highlightjs/highlight.js) syntax definitions for these semantic web languages:
 - SPARQL 1.1: [Query](https://www.w3.org/TR/sparql11-query/) and [Update](https://www.w3.org/TR/sparql11-update/) languages. See [BNF grammar](https://www.w3.org/TR/sparql11-query/#sparqlGrammar) and [syntax diagrams](http://rawgit2.com/VladimirAlexiev/grammar-diagrams/master/sparql11-grammar.xhtml)
 - [Turtle 1.1](https://www.w3.org/TR/turtle/)
-- [SHACL Compact](https://w3c.github.io/shacl/shacl-compact-syntax/]. See [BNF grammar](https://github.com/VladimirAlexiev/grammar-diagrams/raw/master/shaclc-grammar.ebnf) and [syntax diagrams][http://rawgit2.com/VladimirAlexiev/grammar-diagrams/master/shaclc-grammar.xhtml].
+- [SHACL Compact](https://w3c.github.io/shacl/shacl-compact-syntax/). See [BNF grammar](https://github.com/VladimirAlexiev/grammar-diagrams/raw/master/shaclc-grammar.ebnf) and [syntax diagrams](http://rawgit2.com/VladimirAlexiev/grammar-diagrams/master/shaclc-grammar.xhtml).
   Still in TODO
 - [GraphDB Rules](http://graphdb.ontotext.com/documentation/standard/reasoning.html)
 
